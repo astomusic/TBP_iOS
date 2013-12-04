@@ -10,8 +10,9 @@
 #import "DataModel.h"
 
 @interface LoginViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *text;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
+@property (weak, nonatomic) IBOutlet UITextField *userid;
+@property (weak, nonatomic) IBOutlet UITextField *password;
 
 @end
 
@@ -50,11 +51,28 @@
     //CGPoint touchPoint=[reg locationInView:_backgroundImg];
     [self.view endEditing:YES];
 
-    [_text resignFirstResponder];
+    //[_text resignFirstResponder];
 
 }
 - (IBAction)connectButton:(id)sender {
+    [_loginData saveID:@"asto" withPassword:@"1234"];
     
+    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
+        NSLog(@"YES");
+    } else {
+        NSLog(@"NO");
+    }
+}
+
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+{
+    [_loginData saveID:@"asto" withPassword:@"1234"];
+    
+    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

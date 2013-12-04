@@ -283,7 +283,7 @@
                                 <state key="normal" title="Connect"/>
                                 <connections>
                                     <action selector="connectButton:" destination="0dG-9H-3zq" eventType="touchUpInside" id="aEi-ik-vR5"/>
-                                    <segue destination="G7s-Cr-J3G" kind="push" id="XON-8V-cH7"/>
+                                    <segue destination="G7s-Cr-J3G" kind="push" id="Vpf-bf-swh"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User ID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wak-lK-t3B">
@@ -305,7 +305,8 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImg" destination="Gan-Bm-4mb" id="C8E-p4-FxB"/>
-                        <outlet property="text" destination="Wak-lK-t3B" id="hAg-bB-vVr"/>
+                        <outlet property="password" destination="pc0-9j-dId" id="Qwm-1T-XKF"/>
+                        <outlet property="userid" destination="Wak-lK-t3B" id="Mnm-ta-WEZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dke-sf-wAn" userLabel="First Responder" sceneMemberID="firstResponder"/>

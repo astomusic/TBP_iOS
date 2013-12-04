@@ -53,6 +53,19 @@
     cell.textLabel.text = [item objectForKey:@"text"];
     cell.detailTextLabel.text = [item objectForKey:@"image"];
     cell.imageView.image = [UIImage imageNamed:@"background.jpg"];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:20.0];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == 0) { //first row
+        return 140;
+    }
+    else {
+        return 140;
+    }
+    
 }
 @end

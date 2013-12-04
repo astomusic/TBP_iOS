@@ -14,4 +14,7 @@
 -(void)addItem:(NSDictionary*)item;
 -(NSInteger)numberOfData;
 
+-(NSString*)getID;
+-(NSString*)getPassword;
+
 @end

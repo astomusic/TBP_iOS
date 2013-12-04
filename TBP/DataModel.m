@@ -39,6 +39,16 @@
     [_loginData setObject:password forKey:@"password"];
 }
 
+-(NSString*)getID
+{
+    return _loginData[@"userid"];
+}
+
+-(NSString*)getPassword
+{
+    return _loginData[@"password"];
+}
+
 -(NSDictionary*)objectAtIndex:(NSUInteger)index
 {
     return _itemArray[index];
