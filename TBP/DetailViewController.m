@@ -9,13 +9,16 @@
 #import "DetailViewController.h"
 
 @interface DetailViewController ()
+@property (weak, nonatomic) IBOutlet UITableViewCell *DetailContent;
 @property (weak, nonatomic) IBOutlet UITableViewCell *DetailTitle;
-//@property (nonatomic, strong) NSString *recipeName;
+@property (weak, nonatomic) IBOutlet UIImageView *DetailImage;
 
 @end
 
 @implementation DetailViewController
 @synthesize recipeName;
+@synthesize recipeContent;
+@synthesize recipeImage;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +33,8 @@
 {
     [super viewDidLoad];
     self.DetailTitle.textLabel.text = recipeName;
+    self.DetailContent.textLabel.text = recipeContent;
+    self.DetailImage.image = [UIImage imageNamed:recipeImage];
 	// Do any additional setup after loading the view.
 }
 

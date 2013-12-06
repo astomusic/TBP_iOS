@@ -52,8 +52,8 @@
     NSDictionary* item = [_dataModel objectAtIndex:indexPath.row];
     UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     cell.textLabel.text = [item objectForKey:@"text"];
-    cell.detailTextLabel.text = [item objectForKey:@"image"];
-    cell.imageView.image = [UIImage imageNamed:@"background.jpg"];
+    cell.detailTextLabel.text = [item objectForKey:@"content"];
+    cell.imageView.image = [UIImage imageNamed:[item objectForKey:@"image"]];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:20.0];
     cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0];
 
@@ -84,13 +84,18 @@
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:@"showIngredientsSegue"]){
+    if([segue.identifier isEqualToString:@"ShowDetail"]){
         
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSDictionary* item = [_dataModel objectAtIndex:indexPath.row];
         DetailViewController *destViewController = segue.destinationViewController;
-        destViewController.recipeName = @"hihi";
+        destViewController.recipeName = [item objectForKey:@"text"];
+        destViewController.recipeContent = [item objectForKey:@"content"];
+        destViewController.recipeImage = [item objectForKey:@"image"];
     }
 }
+
+
 
 //-(IBAction)link:(id)sender
 //{

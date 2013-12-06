@@ -111,6 +111,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="2WR-hB-JTJ"/>
                     <connections>
+                        <outlet property="DetailContent" destination="kqi-2X-cTv" id="qqi-JM-ZTU"/>
+                        <outlet property="DetailImage" destination="NBI-Vp-UVA" id="Ufe-ej-0ct"/>
                         <outlet property="DetailTitle" destination="OxW-fc-ea1" id="3cT-EF-xmK"/>
                     </connections>
                 </tableViewController>

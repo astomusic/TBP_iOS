@@ -21,9 +21,9 @@
     if (self) {
         //_itemArray = @[@"apple", @"MS", @"linux"];
         _itemArray = [@[
-                        @{@"text":@"text1", @"image":@"1.png"},
-                        @{@"text":@"text2", @"image":@"2.png"},
-                        @{@"text":@"text3", @"image":@"3.png"}
+                        @{@"text":@"text1", @"content":@"content1", @"image":@"1.jpeg"},
+                        @{@"text":@"text2", @"content":@"content2", @"image":@"2.jpg"},
+                        @{@"text":@"text3", @"content":@"content3", @"image":@"3.jpg"}
                         ] mutableCopy];
         _itemDictionary = @{@"name":@"sunjin", @"age":@4, @"female":@YES, @"array":_itemArray};
         
