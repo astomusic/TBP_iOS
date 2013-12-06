@@ -24,6 +24,7 @@
 		27910AAE1845D52000B17658 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27910AAD1845D52000B17658 /* background.jpg */; };
 		27910AB91845E3C600B17658 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27910AB81845E3C600B17658 /* LoginViewController.m */; };
 		27910ABC1845E89300B17658 /* SigninViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27910ABB1845E89300B17658 /* SigninViewController.m */; };
+		27C9A6DE1851A2BD008D2EBF /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C9A6DD1851A2BD008D2EBF /* DetailViewController.m */; };
 		27D552C6184ECE8800E36C0D /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D552C5184ECE8800E36C0D /* DataModel.m */; };
 		27D552C9184F0B2900E36C0D /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D552C8184F0B2900E36C0D /* TableViewController.m */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,8 @@
 		27910AB81845E3C600B17658 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		27910ABA1845E89300B17658 /* SigninViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigninViewController.h; sourceTree = "<group>"; };
 		27910ABB1845E89300B17658 /* SigninViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigninViewController.m; sourceTree = "<group>"; };
+		27C9A6DC1851A2BD008D2EBF /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		27C9A6DD1851A2BD008D2EBF /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		27D552C4184ECE8800E36C0D /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
 		27D552C5184ECE8800E36C0D /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		27D552C7184F0B2900E36C0D /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
@@ -141,6 +144,8 @@
 				27D552C4184ECE8800E36C0D /* DataModel.h */,
 				27D552C5184ECE8800E36C0D /* DataModel.m */,
 				27910A7F1845D1F000B17658 /* Supporting Files */,
+				27C9A6DC1851A2BD008D2EBF /* DetailViewController.h */,
+				27C9A6DD1851A2BD008D2EBF /* DetailViewController.m */,
 			);
 			path = TBP;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				27910AB91845E3C600B17658 /* LoginViewController.m in Sources */,
 				27910A8F1845D1F000B17658 /* ViewController.m in Sources */,
 				27910A891845D1F000B17658 /* AppDelegate.m in Sources */,
+				27C9A6DE1851A2BD008D2EBF /* DetailViewController.m in Sources */,
 				27910ABC1845E89300B17658 /* SigninViewController.m in Sources */,
 				27910A851845D1F000B17658 /* main.m in Sources */,
 				27D552C9184F0B2900E36C0D /* TableViewController.m in Sources */,

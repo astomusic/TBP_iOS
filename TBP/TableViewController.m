@@ -8,6 +8,7 @@
 
 #import "TableViewController.h"
 #import "DataModel.h"
+#import "DetailViewController.h"
 
 @interface TableViewController ()
 {
@@ -55,6 +56,14 @@
     cell.imageView.image = [UIImage imageNamed:@"background.jpg"];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:20.0];
     cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0];
+
+//    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 200, 50)];
+//    [button setTitle:@"test" forState:UIControlStateNormal];
+//    [button setBackgroundColor:[UIColor redColor]];
+//    
+//    [cell.contentView addSubview:button];
+//    [button addTarget:self action:@selector(link:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -68,4 +77,34 @@
     }
     
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"ShowDetail" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"showIngredientsSegue"]){
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        DetailViewController *destViewController = segue.destinationViewController;
+        destViewController.recipeName = @"hihi";
+    }
+}
+
+//-(IBAction)link:(id)sender
+//{
+//
+//}
+
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//    NSLog(@"there");
+//}
+//
+//-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
+//{
+//    NSLog(@"HIHI");
+//    return YES;
+//}
+
 @end
