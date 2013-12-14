@@ -12,5 +12,6 @@
 @property (weak, nonatomic) NSString *recipeName;
 @property (weak, nonatomic) NSString *recipeContent;
 @property (weak, nonatomic) NSString *recipeImage;
+@property (weak, nonatomic) NSArray *recipeComments;
 
 @end

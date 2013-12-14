@@ -7,6 +7,7 @@
 //
 
 #import "DetailViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet UITableViewCell *DetailContent;
@@ -19,6 +20,7 @@
 @synthesize recipeName;
 @synthesize recipeContent;
 @synthesize recipeImage;
+@synthesize recipeComments;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,8 +36,9 @@
     [super viewDidLoad];
     self.DetailTitle.textLabel.text = recipeName;
     self.DetailContent.textLabel.text = recipeContent;
-    self.DetailImage.image = [UIImage imageNamed:recipeImage];
+    [self.DetailImage setImageWithURL:[NSURL URLWithString:recipeImage]];
 	// Do any additional setup after loading the view.
+    [recipeComments count];
 }
 
 - (void)didReceiveMemoryWarning

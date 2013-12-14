@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DataModel : NSObject
+@interface DataModel : NSObject <NSURLConnectionDataDelegate>
+@property UITableViewController* tableContoller;
+
 -(void)saveID:(NSString*)userid withPassword:(NSString*)password;
 -(NSDictionary*)objectAtIndex:(NSUInteger)index;
 -(void)addItem:(NSDictionary*)item;
@@ -16,5 +18,6 @@
 
 -(NSString*)getID;
 -(NSString*)getPassword;
+-(BOOL)authenticateID:(NSString*)userID withPassword:(NSString*)password;
 
 @end

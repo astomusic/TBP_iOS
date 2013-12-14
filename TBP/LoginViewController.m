@@ -55,24 +55,31 @@
 
 }
 - (IBAction)connectButton:(id)sender {
-    [_loginData saveID:@"asto" withPassword:@"1234"];
-    
-    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
-        NSLog(@"YES");
-    } else {
-        NSLog(@"NO");
-    }
+//    [_loginData saveID:@"asto" withPassword:@"1234"];
+//    
+//    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
+//        NSLog(@"YES");
+//    } else {
+//        NSLog(@"NO");
+//    }
 }
 
 -(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    [_loginData saveID:@"asto" withPassword:@"1234"];
-    
-    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
-        return YES;
-    } else {
-        return NO;
+//    [_loginData saveID:@"asto" withPassword:@"1234"];
+//    
+//    if([self.userid.text isEqualToString:[_loginData getID]] && [self.password.text isEqualToString:[_loginData getPassword]]) {
+//        return YES;
+//    } else {
+//        return NO;
+//    }
+    BOOL perform = NO;
+    if([identifier isEqualToString:@"loginToHome"]) {
+        _loginData = [[DataModel alloc]init];
+        perform = [_loginData authenticateID:self.userid.text withPassword:self.password.text];
     }
+    
+    return perform;
 }
 
 @end

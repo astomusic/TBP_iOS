@@ -9,6 +9,8 @@
 #import "TableViewController.h"
 #import "DataModel.h"
 #import "DetailViewController.h"
+#import "CustomCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface TableViewController ()
 {
@@ -32,6 +34,7 @@
 {
     [super viewDidLoad];
     _dataModel = [[DataModel alloc]init];
+    _dataModel.tableContoller = self;
 	// Do any additional setup after loading the view.
 }
 
@@ -50,33 +53,34 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary* item = [_dataModel objectAtIndex:indexPath.row];
-    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    cell.textLabel.text = [item objectForKey:@"text"];
-    cell.detailTextLabel.text = [item objectForKey:@"content"];
-    cell.imageView.image = [UIImage imageNamed:[item objectForKey:@"image"]];
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:20.0];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0];
+//    UITableViewCell* cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+//    cell.textLabel.text = [item objectForKey:@"text"];
+//    cell.detailTextLabel.text = [item objectForKey:@"content"];
+//    cell.imageView.image = [UIImage imageNamed:[item objectForKey:@"image"]];
+//    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:20.0];
+//    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12.0];
+    
+    CustomCell *myCell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
+    myCell.cellTitle.text = [item objectForKey:@"title"];
+    //myCell.cellImage.image = [UIImage imageNamed:[item objectForKey:@"image"]];
+    NSString* imgUrl = @"http://localhost:8080/images/";
+    NSString* imgFileName = [item objectForKey:@"attachment"];
+    NSString* finalUrl = [imgUrl stringByAppendingString:imgFileName];
+    [myCell.cellImage setImageWithURL:[NSURL URLWithString:finalUrl]];
+    
+    return myCell;
+}
 
-//    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(100, 100, 200, 50)];
-//    [button setTitle:@"test" forState:UIControlStateNormal];
-//    [button setBackgroundColor:[UIColor redColor]];
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    
-//    [cell.contentView addSubview:button];
-//    [button addTarget:self action:@selector(link:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.row == 0) { //first row
-        return 140;
-    }
-    else {
-        return 140;
-    }
-    
-}
+//    if (indexPath.row == 0) { //first row
+//        return 140;
+//    }
+//    else {
+//        return 140;
+//    }
+//    
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -89,9 +93,15 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         NSDictionary* item = [_dataModel objectAtIndex:indexPath.row];
         DetailViewController *destViewController = segue.destinationViewController;
-        destViewController.recipeName = [item objectForKey:@"text"];
-        destViewController.recipeContent = [item objectForKey:@"content"];
-        destViewController.recipeImage = [item objectForKey:@"image"];
+        
+        NSString* imgUrl = @"http://localhost:8080/images/";
+        NSString* imgFileName = [item objectForKey:@"attachment"];
+        NSString* finalUrl = [imgUrl stringByAppendingString:imgFileName];
+        
+        destViewController.recipeName = [item objectForKey:@"title"];
+        destViewController.recipeContent = [item objectForKey:@"contents"];
+        destViewController.recipeImage = finalUrl;
+        destViewController.recipeComments = [item objectForKey:@"comments"];
     }
 }
 
