@@ -101,10 +101,10 @@
 
 - (BOOL)authenticateID:(NSString*)userID withPassword:(NSString*)password
 {
-    NSString *aURLString = @"http://1.234.2.8/login.php";
-    NSString *aFormData = [NSString stringWithFormat:@"id=%@&passwd=%@", userID, password];
-//    NSString *aURLString = @"http://localhost:8080/login/get";
-//    NSString *aFormData = [NSString stringWithFormat:@"userid=%@&password=%@", userID, password];
+//    NSString *aURLString = @"http://1.234.2.8/login.php";
+//    NSString *aFormData = [NSString stringWithFormat:@"id=%@&passwd=%@", userID, password];
+    NSString *aURLString = @"http://localhost:8080/login/get.json";
+    NSString *aFormData = [NSString stringWithFormat:@"userid=%@&password=%@", userID, password];
     NSURL *aURL = [NSURL URLWithString:aURLString];
     NSMutableURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
     [aRequest setHTTPMethod:@"POST"];
@@ -130,6 +130,6 @@
     } else {
         return NO;
     }
-}
 
+}
 @end
