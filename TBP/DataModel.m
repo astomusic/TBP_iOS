@@ -63,10 +63,37 @@
     //NSLog(@"item array = %@", _itemArray);
 }
 
--(void)saveID:(NSString*)userid withPassword:(NSString*)password
+-(BOOL)saveID:(NSString*)userid withName:(NSString*)name withPassword:(NSString*)password
 {
-    [_loginData setObject:userid forKey:@"userid"];
-    [_loginData setObject:password forKey:@"password"];
+//    [_loginData setObject:userid forKey:@"userid"];
+//    [_loginData setObject:password forKey:@"password"];
+    
+    NSString *aURLString = @"http://localhost:8080/login/new.json";
+    NSString *aFormData = [NSString stringWithFormat:@"name=%@&userid=%@&password=%@", name, userid,password];
+    NSURL *aURL = [NSURL URLWithString:aURLString];
+    NSMutableURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
+    [aRequest setHTTPMethod:@"POST"];
+    [aRequest setHTTPBody:[aFormData dataUsingEncoding:NSUTF8StringEncoding]];
+    NSHTTPURLResponse *aResponse;
+    NSError *aError;
+    NSData *aResultData = [NSURLConnection
+                           sendSynchronousRequest:aRequest
+                           returningResponse:&aResponse error:&aError];
+    
+    NSDictionary *dataDictionary = [NSJSONSerialization
+                                    JSONObjectWithData:aResultData
+                                    options:NSJSONReadingMutableContainers
+                                    error:nil];
+    
+    NSLog(@"login Data = %@", aResultData);
+    NSLog(@"login response = %d", aResponse.statusCode);
+    NSLog(@"login result = %@", dataDictionary);
+    
+    if ([dataDictionary[@"code"] isEqualToNumber:@200]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 -(NSString*)getID
@@ -121,7 +148,7 @@
                           options:NSJSONReadingMutableContainers
                           error:nil];
     
-    NSLog(@"login response = %@", aResultData);
+    NSLog(@"login Data = %@", aResultData);
     NSLog(@"login response = %d", aResponse.statusCode);
     NSLog(@"login result = %@", dataDictionary);
     

@@ -11,7 +11,7 @@
 @interface DataModel : NSObject <NSURLConnectionDataDelegate>
 @property UITableViewController* tableContoller;
 
--(void)saveID:(NSString*)userid withPassword:(NSString*)password;
+-(BOOL)saveID:(NSString*)userid withName:(NSString*)name withPassword:(NSString*)password;
 -(NSDictionary*)objectAtIndex:(NSUInteger)index;
 -(void)addItem:(NSDictionary*)item;
 -(NSInteger)numberOfData;

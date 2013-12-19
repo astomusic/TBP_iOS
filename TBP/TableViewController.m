@@ -11,6 +11,8 @@
 #import "DetailViewController.h"
 #import "CustomCell.h"
 #import "UIImageView+WebCache.h"
+#import "WriteViewController.h"
+
 
 @interface TableViewController ()
 {
@@ -36,12 +38,66 @@
     _dataModel = [[DataModel alloc]init];
     _dataModel.tableContoller = self;
 	// Do any additional setup after loading the view.
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                    target:self
+                                    action:@selector(newImage:)];
+    self.navigationItem.rightBarButtonItem = rightButton;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)newImage:(id)sender
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.delegate = self;
+    [self.navigationController presentViewController:picker animated:YES completion:^{}];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    if ([mediaType isEqualToString:(__bridge id)kUTTypeImage]) {
+        UIImage* aImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        CLImageEditor *editor = [[CLImageEditor alloc] initWithImage:aImage];
+        editor.delegate = self;
+        [picker pushViewController:editor animated:YES];
+        
+//        [picker dismissViewControllerAnimated:YES completion:^{
+//            UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:@"이미지" message:@"골랐어요" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+//            alertView1.alertViewStyle = UIAlertViewStyleDefault;
+//            [alertView1 show];
+//        }];
+    }
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        UIAlertView *alertView1 = [[UIAlertView alloc] initWithTitle:@"이미지" message:@"안골랐네" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+        alertView1.alertViewStyle = UIAlertViewStyleDefault;
+        [alertView1 show];
+    }];
+}
+
+#pragma mark - CLImageEditor delegate
+
+- (void)imageEditor:(CLImageEditor *)editor didFinishEdittingWithImage:(UIImage *)image
+{
+    //image 사용하기
+    WriteViewController* writeVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TBPWriter"];
+    [writeVC prepareData:image];
+    [editor dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController pushViewController:writeVC
+                                         animated:NO];
+    [editor dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Datasource

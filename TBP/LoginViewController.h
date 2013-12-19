@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *test_userid;
+@property (weak, nonatomic) IBOutlet UITextField *test_password;
+@property (weak, nonatomic) IBOutlet UIButton *connect_button;
 
 @end

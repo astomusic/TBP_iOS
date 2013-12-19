@@ -33,11 +33,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [self.view addGestureRecognizer:tap];
     
     _loginData = [[DataModel alloc] init];
+    
+    _test_userid.delegate = self;
+    _test_password.delegate = self;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,4 +86,45 @@
     return perform;
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if(textField.tag == 1) {
+        [_test_password becomeFirstResponder];
+    } else {
+        [self.view endEditing:YES];
+        if([self shouldPerformSegueWithIdentifier:@"loginToHome" sender:self]) {
+            [self performSegueWithIdentifier:@"loginToHome" sender:self];
+        }
+    }
+    return NO;
+}
+
+//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    [UIView beginAnimations:@"MyAnimation" context:nil];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    if (textField == _test_userid) {
+//        CGRect newframe = self.view.frame;
+//        newframe.origin.y = -40;
+//        self.view.frame = newframe;
+//        self.view.backgroundColor = [UIColor grayColor];
+//    }
+//    [UIView commitAnimations];
+//    return YES;
+//}
+//
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+//{
+//    [UIView beginAnimations:@"MyAnimation" context:nil];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    if (textField == _test_password) {
+//        CGRect newframe = self.view.frame;
+//        newframe.origin.y = 0;
+//        self.view.frame = newframe;
+//        self.view.backgroundColor = [UIColor whiteColor];
+//    }
+//    [UIView commitAnimations];
+//    return YES;
+//}
 @end

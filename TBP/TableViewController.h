@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "CLImageEditor.h"
 
 @interface TableViewController : UITableViewController
-    <UITableViewDataSource, UITableViewDelegate>
+    <UIImagePickerControllerDelegate, UINavigationControllerDelegate,UITableViewDataSource, UITableViewDelegate, CLImageEditorDelegate>
+
 
 @end

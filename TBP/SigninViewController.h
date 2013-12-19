@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SigninViewController : UIViewController
+@interface SigninViewController : UIViewController <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *test_userid;
+@property (weak, nonatomic) IBOutlet UITextField *test_password;
+@property (weak, nonatomic) IBOutlet UITextField *test_confirm;
 
 @end
