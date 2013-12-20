@@ -60,7 +60,7 @@
 - (IBAction)onSendCilck:(id)sender {
     //TODO: write to server using NSURLConnection
     
-    NSData *imageData = UIImagePNGRepresentation(_internalImage);
+    NSData *imageData = UIImageJPEGRepresentation(_internalImage, 0.9);
     
     [_NewPostData newPost:_writeTitle.text withText:_writeText.text withImage:imageData];
     [self dismissViewControllerAnimated:YES completion:nil];
