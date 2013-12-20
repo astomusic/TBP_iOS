@@ -60,40 +60,7 @@
     _itemArray = [resultDic objectForKey:@"boardlist"];
     
     [_tableContoller.tableView reloadData];
-    //NSLog(@"item array = %@", _itemArray);
-}
-
--(BOOL)saveID:(NSString*)userid withName:(NSString*)name withPassword:(NSString*)password
-{
-//    [_loginData setObject:userid forKey:@"userid"];
-//    [_loginData setObject:password forKey:@"password"];
-    
-    NSString *aURLString = @"http://localhost:8080/login/new.json";
-    NSString *aFormData = [NSString stringWithFormat:@"name=%@&userid=%@&password=%@", name, userid,password];
-    NSURL *aURL = [NSURL URLWithString:aURLString];
-    NSMutableURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
-    [aRequest setHTTPMethod:@"POST"];
-    [aRequest setHTTPBody:[aFormData dataUsingEncoding:NSUTF8StringEncoding]];
-    NSHTTPURLResponse *aResponse;
-    NSError *aError;
-    NSData *aResultData = [NSURLConnection
-                           sendSynchronousRequest:aRequest
-                           returningResponse:&aResponse error:&aError];
-    
-    NSDictionary *dataDictionary = [NSJSONSerialization
-                                    JSONObjectWithData:aResultData
-                                    options:NSJSONReadingMutableContainers
-                                    error:nil];
-    
-    NSLog(@"login Data = %@", aResultData);
-    NSLog(@"login response = %d", aResponse.statusCode);
-    NSLog(@"login result = %@", dataDictionary);
-    
-    if ([dataDictionary[@"code"] isEqualToNumber:@200]) {
-        return YES;
-    } else {
-        return NO;
-    }
+    NSLog(@"item array = %@", _itemArray);
 }
 
 -(NSString*)getID
@@ -124,6 +91,39 @@
 - (NSString*) description
 {
     return _loginData.description;
+}
+
+-(BOOL)saveID:(NSString*)userid withName:(NSString*)name withPassword:(NSString*)password
+{
+    //    [_loginData setObject:userid forKey:@"userid"];
+    //    [_loginData setObject:password forKey:@"password"];
+    
+    NSString *aURLString = @"http://localhost:8080/login/new.json";
+    NSString *aFormData = [NSString stringWithFormat:@"name=%@&userid=%@&password=%@", name, userid,password];
+    NSURL *aURL = [NSURL URLWithString:aURLString];
+    NSMutableURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
+    [aRequest setHTTPMethod:@"POST"];
+    [aRequest setHTTPBody:[aFormData dataUsingEncoding:NSUTF8StringEncoding]];
+    NSHTTPURLResponse *aResponse;
+    NSError *aError;
+    NSData *aResultData = [NSURLConnection
+                           sendSynchronousRequest:aRequest
+                           returningResponse:&aResponse error:&aError];
+    
+    NSDictionary *dataDictionary = [NSJSONSerialization
+                                    JSONObjectWithData:aResultData
+                                    options:NSJSONReadingMutableContainers
+                                    error:nil];
+    
+    NSLog(@"login Data = %@", aResultData);
+    NSLog(@"login response = %d", aResponse.statusCode);
+    NSLog(@"login result = %@", dataDictionary);
+    
+    if ([dataDictionary[@"code"] isEqualToNumber:@200]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (BOOL)authenticateID:(NSString*)userID withPassword:(NSString*)password
@@ -158,5 +158,44 @@
         return NO;
     }
 
+}
+
+-(BOOL) newPost:(NSString*)title withText:(NSString*)text withImage:(NSData*)image
+{
+    NSString *aURLString = @"http://localhost:8080/board";
+    //NSString *aFormData = [NSString stringWithFormat:@"title=%@&contents=%@", title, text];
+    NSURL *aURL = [NSURL URLWithString:aURLString];
+    NSMutableURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
+    [aRequest setHTTPMethod:@"POST"];
+    
+    NSString *boundary = @"---------------------------14737809831466499882746641449";
+    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+    [aRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"title"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"%@\r\n", title] dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", @"contents"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"img_file\"; filename=\"%@.jpg\"\r\n", @"test"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[@"Content-Type: image/jpg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    //[body appendData: [aFormData dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData: [NSData dataWithData:image]];
+    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+
+    [aRequest setHTTPBody:body];
+    
+    NSHTTPURLResponse *aResponse;
+    NSError *aError;
+    NSData *aResultData = [NSURLConnection
+                           sendSynchronousRequest:aRequest
+                           returningResponse:&aResponse error:&aError];
+    //NSLog(@"Newpost Data = %@", aResultData);
+    return NO;
 }
 @end

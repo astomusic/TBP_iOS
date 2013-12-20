@@ -7,12 +7,16 @@
 //
 
 #import "WriteViewController.h"
+#import "DataModel.h"
 
 @interface WriteViewController ()
 
 @end
 
 @implementation WriteViewController
+{
+    DataModel* _NewPostData;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +34,9 @@
     [self.view addGestureRecognizer:tap];
     _writeImage.image = _internalImage;
     _writeText.delegate = self;
+    _writeTitle.delegate = self;
+    
+    _NewPostData = [[DataModel alloc] init];
 	// Do any additional setup after loading the view.
 }
 
@@ -52,6 +59,10 @@
 
 - (IBAction)onSendCilck:(id)sender {
     //TODO: write to server using NSURLConnection
+    
+    NSData *imageData = UIImagePNGRepresentation(_internalImage);
+    
+    [_NewPostData newPost:_writeTitle.text withText:_writeText.text withImage:imageData];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -89,5 +100,35 @@
     [UIView commitAnimations];
     return YES;
 }
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:@"MyAnimation" context:nil];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    if (textField == _writeTitle) {
+        CGRect newframe = self.view.frame;
+        newframe.origin.y = -150;
+        self.view.frame = newframe;
+        self.view.backgroundColor = [UIColor grayColor];
+    }
+    [UIView commitAnimations];
+    return YES;
+}
+
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+//{
+//    [UIView beginAnimations:@"MyAnimation" context:nil];
+//    [UIView setAnimationDuration:1];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+//    if (textField == _writeTitle) {
+//        CGRect newframe = self.view.frame;
+//        newframe.origin.y = 0;
+//        self.view.frame = newframe;
+//        self.view.backgroundColor = [UIColor whiteColor];
+//    }
+//    [UIView commitAnimations];
+//    return YES;
+//}
 
 @end

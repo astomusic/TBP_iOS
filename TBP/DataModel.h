@@ -19,5 +19,6 @@
 -(NSString*)getID;
 -(NSString*)getPassword;
 -(BOOL)authenticateID:(NSString*)userID withPassword:(NSString*)password;
+-(BOOL) newPost:(NSString*)title withText:(NSString*)text withImage:(NSData*)image;
 
 @end

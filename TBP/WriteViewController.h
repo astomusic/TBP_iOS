@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WriteViewController : UIViewController <UITextViewDelegate>
+@interface WriteViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate>
 {
     UIImage* _internalImage;
 }
 @property (weak, nonatomic) IBOutlet UIImageView *writeImage;
 @property (weak, nonatomic) IBOutlet UITextView *writeText;
+@property (weak, nonatomic) IBOutlet UITextField *writeTitle;
 - (void)prepareData:(UIImage*)image;
 - (IBAction)onSendCilck:(id)sender;
 
