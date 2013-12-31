@@ -17,6 +17,7 @@
 @interface TableViewController ()
 {
     DataModel* _dataModel;
+    NSString* _fileName;
 }
 
 @end
@@ -35,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"load");
     _dataModel = [[DataModel alloc]init];
     _dataModel.tableContoller = self;
 	// Do any additional setup after loading the view.
@@ -44,6 +46,14 @@
                                     target:self
                                     action:@selector(newImage:)];
     self.navigationItem.rightBarButtonItem = rightButton;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //[super viewDidAppear:NO];
+    NSLog(@"appear");
+    _dataModel = [[DataModel alloc]init];
+    _dataModel.tableContoller = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +73,25 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+    NSURL *assetURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+    
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *imageAsset)
+    {
+        ALAssetRepresentation *imageRep = [imageAsset defaultRepresentation];
+        NSLog(@"[imageRep filename] : %@", [imageRep filename]);
+        _fileName = [imageRep filename];
+    };
+    
+    ALAssetsLibrary* assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:assetURL resultBlock:resultblock failureBlock:nil];
+    
+//    __block NSString *fileName = nil;
+//    
+//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//    [library assetForURL:assetURL resultBlock:^(ALAsset *asset)  {
+//        fileName = asset.defaultRepresentation.fileName;
+//    } failureBlock:nil];
+
     if ([mediaType isEqualToString:(__bridge id)kUTTypeImage]) {
         UIImage* aImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
@@ -93,7 +122,7 @@
 {
     //image 사용하기
     WriteViewController* writeVC = [self.storyboard instantiateViewControllerWithIdentifier:@"TBPWriter"];
-    [writeVC prepareData:image];
+    [writeVC prepareData:image withFileName:_fileName];
     [editor dismissViewControllerAnimated:NO completion:nil];
     [self.navigationController pushViewController:writeVC
                                          animated:NO];
@@ -159,6 +188,9 @@
         destViewController.recipeImage = finalUrl;
         destViewController.recipeComments = [item objectForKey:@"comments"];
     }
+}
+
+- (IBAction)returnedList:(UIStoryboardSegue *)segue {
 }
 
 

@@ -52,9 +52,10 @@
 }
 
 
-- (void)prepareData:(UIImage*)image
+- (void)prepareData:(UIImage*)image withFileName:(NSString*)fileName
 {
     _internalImage = image;
+    _fileName = fileName;
 }
 
 - (IBAction)onSendCilck:(id)sender {
@@ -62,7 +63,7 @@
     
     NSData *imageData = UIImageJPEGRepresentation(_internalImage, 0.9);
     
-    [_NewPostData newPost:_writeTitle.text withText:_writeText.text withImage:imageData];
+    [_NewPostData newPost:_writeTitle.text withText:_writeText.text withImage:imageData withFileName:_fileName];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

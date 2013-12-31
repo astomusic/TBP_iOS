@@ -22,25 +22,26 @@
     self = [super init];
     if (self) {
         //_itemArray = @[@"apple", @"MS", @"linux"];
-        _itemArray2 = [@[
-                        @{@"text":@"Drop of Water", @"content":@"Drop of Water on blue thing", @"image":@"http://www.ilikewallpaper.net/iphone-5-wallpapers/download/4938/Blue-Drops-iphone-5-wallpaper-ilikewallpaper_com.jpg"},
-                        @{@"text":@"Dew", @"content":@"Dew on pink flower", @"image":@"http://webtoolfeed.files.wordpress.com/2012/10/tumblr_mc04thy3br1rhztfto1_1280.jpg"},
-                        @{@"text":@"Valley", @"content":@"Valley in winter mountain", @"image":@"http://www.animhut.com/wp-content/uploads//2012/09/Download-iPhone5-Retina-HD-Wallpapers-12.jpg"},
-                        @{@"text":@"Drop of Water", @"content":@"Drop of Water on blue thing", @"image":@"http://www.ilikewallpaper.net/iphone-5-wallpapers/download/4938/Blue-Drops-iphone-5-wallpaper-ilikewallpaper_com.jpg"},
-                        @{@"text":@"Dew", @"content":@"Dew on pink flower", @"image":@"http://webtoolfeed.files.wordpress.com/2012/10/tumblr_mc04thy3br1rhztfto1_1280.jpg"},
-                        @{@"text":@"Valley", @"content":@"Valley in winter mountain", @"image":@"http://www.animhut.com/wp-content/uploads//2012/09/Download-iPhone5-Retina-HD-Wallpapers-12.jpg"}
-                        ] mutableCopy];
-        _itemDictionary = @{@"name":@"sunjin", @"age":@4, @"female":@YES, @"array":_itemArray2};
-        
+//        _itemArray2 = [@[
+//                        @{@"text":@"Drop of Water", @"content":@"Drop of Water on blue thing", @"image":@"http://www.ilikewallpaper.net/iphone-5-wallpapers/download/4938/Blue-Drops-iphone-5-wallpaper-ilikewallpaper_com.jpg"},
+//                        @{@"text":@"Dew", @"content":@"Dew on pink flower", @"image":@"http://webtoolfeed.files.wordpress.com/2012/10/tumblr_mc04thy3br1rhztfto1_1280.jpg"},
+//                        @{@"text":@"Valley", @"content":@"Valley in winter mountain", @"image":@"http://www.animhut.com/wp-content/uploads//2012/09/Download-iPhone5-Retina-HD-Wallpapers-12.jpg"},
+//                        @{@"text":@"Drop of Water", @"content":@"Drop of Water on blue thing", @"image":@"http://www.ilikewallpaper.net/iphone-5-wallpapers/download/4938/Blue-Drops-iphone-5-wallpaper-ilikewallpaper_com.jpg"},
+//                        @{@"text":@"Dew", @"content":@"Dew on pink flower", @"image":@"http://webtoolfeed.files.wordpress.com/2012/10/tumblr_mc04thy3br1rhztfto1_1280.jpg"},
+//                        @{@"text":@"Valley", @"content":@"Valley in winter mountain", @"image":@"http://www.animhut.com/wp-content/uploads//2012/09/Download-iPhone5-Retina-HD-Wallpapers-12.jpg"}
+//                        ] mutableCopy];
+//        _itemDictionary = @{@"name":@"sunjin", @"age":@4, @"female":@YES, @"array":_itemArray2};
+//        
         //NSMutableArray* _newArray = [@[@"apple"] mutableCopy]; //
         _loginData = [[NSMutableDictionary alloc] initWithCapacity:2];
         
-        _responseData = [[NSMutableData alloc] initWithCapacity:10];
+        _responseData = [[NSMutableData alloc] initWithCapacity:100];
         //NSString *aURLString = @"http://1.234.2.8/board.php";
         NSString *aURLString = @"http://localhost:8080/board/list.json";
         NSURL *aURL = [NSURL URLWithString:aURLString];
         NSURLRequest *aRequest = [NSMutableURLRequest requestWithURL:aURL];
         NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:aRequest delegate:self startImmediately:YES];
+        NSLog(@"DATAMODEL INIT");
     }
     return self;
 }
@@ -61,6 +62,7 @@
     
     [_tableContoller.tableView reloadData];
     NSLog(@"item array = %@", _itemArray);
+    NSLog(@"RELOAD");
 }
 
 -(NSString*)getID
@@ -115,9 +117,10 @@
                                     options:NSJSONReadingMutableContainers
                                     error:nil];
     
-    NSLog(@"login Data = %@", aResultData);
-    NSLog(@"login response = %d", aResponse.statusCode);
-    NSLog(@"login result = %@", dataDictionary);
+//    NSLog(@"login Data = %@", aResultData);
+//    NSLog(@"login response = %d", aResponse.statusCode);
+//    NSLog(@"login result = %@", dataDictionary);
+    NSLog(@"SIGNIN COMPLETE");
     
     if ([dataDictionary[@"code"] isEqualToNumber:@200]) {
         return YES;
@@ -148,9 +151,10 @@
                           options:NSJSONReadingMutableContainers
                           error:nil];
     
-    NSLog(@"login Data = %@", aResultData);
-    NSLog(@"login response = %d", aResponse.statusCode);
-    NSLog(@"login result = %@", dataDictionary);
+//    NSLog(@"login Data = %@", aResultData);
+//    NSLog(@"login response = %d", aResponse.statusCode);
+//    NSLog(@"login result = %@", dataDictionary);
+    NSLog(@"LOGIN COMPLETE");
     
     if ([dataDictionary[@"code"] isEqualToNumber:@200]) {
         return YES;
@@ -160,8 +164,12 @@
 
 }
 
--(BOOL) newPost:(NSString*)title withText:(NSString*)text withImage:(NSData*)image
+-(BOOL) newPost:(NSString*)title withText:(NSString*)text withImage:(NSData*)image withFileName:(NSString*)filename
 {
+    NSDateFormatter *now = [[NSDateFormatter alloc] init];
+    [now setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    NSString* date = [now stringFromDate:[NSDate date]];
+    
     NSString *aURLString = @"http://localhost:8080/board";
     //NSString *aFormData = [NSString stringWithFormat:@"title=%@&contents=%@", title, text];
     NSURL *aURL = [NSURL URLWithString:aURLString];
@@ -182,7 +190,7 @@
     [body appendData:[[NSString stringWithFormat:@"%@\r\n", text] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"img_file\"; filename=\"%@.jpg\"\r\n", @"test"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"img_file\"; filename=\"%@.jpg\"\r\n",date] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Type: image/jpg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     //[body appendData: [aFormData dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData: [NSData dataWithData:image]];

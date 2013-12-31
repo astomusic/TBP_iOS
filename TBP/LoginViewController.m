@@ -41,7 +41,6 @@
     
     _test_userid.delegate = self;
     _test_password.delegate = self;
-    
 }
 
 - (void)didReceiveMemoryWarning
