@@ -8,10 +8,11 @@
 
 #import "DetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "CustomCell2.h"
 
 @interface DetailViewController ()
-@property (weak, nonatomic) IBOutlet UITableViewCell *DetailContent;
-@property (weak, nonatomic) IBOutlet UITableViewCell *DetailTitle;
+@property (weak, nonatomic) IBOutlet UILabel *DetailContent;
+@property (weak, nonatomic) IBOutlet UILabel *DetailTitle;
 @property (weak, nonatomic) IBOutlet UIImageView *DetailImage;
 
 @end
@@ -34,17 +35,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.DetailTitle.textLabel.text = recipeName;
-    self.DetailContent.textLabel.text = recipeContent;
+    self.DetailTitle.text = recipeName;
+    self.DetailContent.text = recipeContent;
     [self.DetailImage setImageWithURL:[NSURL URLWithString:recipeImage]];
 	// Do any additional setup after loading the view.
-    [recipeComments count];
+    //NSLog(@"%@", [recipeComments count]);
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [recipeComments count];;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //NSArray* item = [recipeComments objectAtIndex:indexPath.row];
+    
+    CustomCell2 *myCell = [tableView dequeueReusableCellWithIdentifier:@"myCell2"];
+    int no = indexPath.row;
+    myCell.comment.text = [recipeComments[no] objectForKey:@"content"];
+    
+    return myCell;
 }
 
 @end

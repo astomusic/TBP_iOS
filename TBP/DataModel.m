@@ -198,11 +198,11 @@
 
     [aRequest setHTTPBody:body];
     
-    NSHTTPURLResponse *aResponse;
-    NSError *aError;
-    NSData *aResultData = [NSURLConnection
-                           sendSynchronousRequest:aRequest
-                           returningResponse:&aResponse error:&aError];
+//    NSHTTPURLResponse *aResponse;
+//    NSError *aError;
+//    NSData *aResultData = [NSURLConnection
+//                           sendSynchronousRequest:aRequest
+//                           returningResponse:&aResponse error:&aError];
     //NSLog(@"Newpost Data = %@", aResultData);
     return NO;
 }

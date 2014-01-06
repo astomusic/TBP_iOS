@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UITableViewController
+@interface DetailViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) NSString *recipeName;
 @property (weak, nonatomic) NSString *recipeContent;
 @property (weak, nonatomic) NSString *recipeImage;
